@@ -62,6 +62,7 @@ int SeachRowInMatrixWithMinSummElements (int[,] array) // Создаем нов�
     {
         if (min>=arraySummRow[i])
         {
+            min=arraySummRow[i];
             posicion=i+1;
         }
     }
@@ -74,8 +75,27 @@ string PrintArray (int [] array)
     return string.Join(", ", array);
 }
 
+int [] GetMatrixToArray (int[,] array) // Создаем новый массив для сумм
+{                                                      // В нем индекс+1 соответствует номеру строки в исходном двумерном                 
+    int rows = array.GetLength(0);                     
+    int columns = array.GetLength(1);
+    int [] arraySummRow = new int[rows]; 
+    int summ=0;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            summ=summ+array[i,j];
+        }
+        arraySummRow[i]=summ;
+        summ=0;
+    }
+    return arraySummRow;
+}
+
 
 int[,] array = CreateArray(3,3, 0,5);
 PrintMatrixArray(array);
+Console.WriteLine(PrintArray(GetMatrixToArray(array)));
 int posicion=SeachRowInMatrixWithMinSummElements(array);
 Console.WriteLine($"{posicion} row");
